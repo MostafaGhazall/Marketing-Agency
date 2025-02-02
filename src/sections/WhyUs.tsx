@@ -29,7 +29,7 @@ const Counter = React.memo(function Counter({ value }: { value: number }) {
       ref={ref}
       className="text-4xl sm:text-5xl md:text-7xl font-bold text-secondary"
     >
-      {displayValue}+ 
+      {displayValue}+
     </motion.span>
   );
 });
@@ -61,7 +61,7 @@ const Slide = React.memo(function Slide({ image, active, next, onClick }: SlideP
         transform: `translateZ(0) scale(${scale}) translateX(${translateX}) rotate(${rotate})`,
       }}
       transition={{ duration: 0.6 }}
-      onClick={onClick} // Make cards clickable
+      onClick={onClick} // Clicking a slide switches to it
     />
   );
 });
@@ -84,14 +84,25 @@ const slides = [
 
 const WhyUs: React.FC = () => {
   const [index, setIndex] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Auto-slide every 4 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
+  // Function to reset and restart the timer
+  const resetTimer = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    intervalRef.current = setInterval(() => {
       setIndex((prev) => (prev + 1) % slides.length);
     }, 4000);
-    return () => clearInterval(interval);
-  }, []);
+  };
+
+  // Auto-slide every 4 seconds and reset on `index` change
+  useEffect(() => {
+    resetTimer();
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [index]);
 
   // Precompute active/next for each slide
   const slidesWithStates = useMemo(() => {
@@ -116,18 +127,21 @@ const WhyUs: React.FC = () => {
             transformStyle: "preserve-3d",
           }}
         >
-          {/* Slide Cards (Now Clickable) */}
+          {/* Slide Cards */}
           {slidesWithStates.map((slide, i) => (
             <Slide
               key={i}
               image={slide.image}
               active={slide.active}
               next={slide.next}
-              onClick={() => setIndex(i)} // Clicking a card switches to that slide
+              onClick={() => {
+                setIndex(i);
+                resetTimer(); // Reset timer when clicking a slide
+              }}
             />
           ))}
 
-          {/* Dot Indicators (Now Above the Cards) */}
+          {/* Dot Indicators */}
           <div className="absolute bottom-[-30px] left-1/2 transform -translate-x-1/2 flex gap-3 z-50">
             {slides.map((_, i) => (
               <button
@@ -135,7 +149,10 @@ const WhyUs: React.FC = () => {
                 className={`w-3 h-3 rounded-full ${
                   i === index ? "bg-secondary scale-125" : "bg-accent"
                 } transition-all duration-300`}
-                onClick={() => setIndex(i)}
+                onClick={() => {
+                  setIndex(i);
+                  resetTimer(); // Reset timer when clicking a dot
+                }}
                 aria-label={`Go to slide ${i + 1}`}
               />
             ))}
@@ -176,9 +193,7 @@ const WhyUs: React.FC = () => {
               <Counter value={50} />
             </div>
             <div className="text-center md:text-left">
-              <p className="text-sm uppercase text-accent">
-                Years of Experience
-              </p>
+              <p className="text-sm uppercase text-accent">Years of Experience</p>
               <Counter value={12} />
             </div>
           </div>

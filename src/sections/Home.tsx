@@ -87,10 +87,10 @@ const Home: React.FC = () => {
         </div>
 
         {/* Supporting Text */}
-        <p className="text-xl sm:text-3xl md:text-6xl text-primary font-bold">
+        <p className="text-xl sm:text-3xl md:text-6xl text-white font-bold sm:text-[#dcd4c7]">
           marketing
         </p>
-        <p className="text-xl sm:text-3xl md:text-6xl mt-2 text-primary font-bold">
+        <p className="text-xl sm:text-3xl md:text-6xl mt-2 text-white font-bold sm:text-[#dcd4c7]">
           made simple
         </p>
 

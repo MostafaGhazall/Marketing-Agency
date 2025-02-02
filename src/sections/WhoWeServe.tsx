@@ -51,7 +51,6 @@ const WhoWeServe: React.FC = () => {
         style={{
           backgroundImage: "url('/whoweserve/whoweserve2.jpg')",
           y: bgY,
-          // GPU hints for smoother parallax
           willChange: "transform",
           backfaceVisibility: "hidden",
         }}
@@ -70,7 +69,7 @@ const WhoWeServe: React.FC = () => {
         <motion.img
           src="/whoweserve/car.png"
           alt="Moving Car"
-          className="absolute bottom-13 left-0 w-[200px] sm:w-[250px] md:w-[350px]"
+          className="absolute bottom-14 left-0 w-[200px] sm:w-[250px] md:w-[350px]"
           style={{
             x: carX,
             willChange: "transform",
