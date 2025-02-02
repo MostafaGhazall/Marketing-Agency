@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --primary: #dcd4c7; /* Beige */
+  --secondary: #7a1315; /* Maroon */
+  --accent: #1e1f21; /* Black */
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.text-secondary {
+  color: var(--secondary);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.hover\:text-secondary:hover {
+  color: var(--secondary);
+}
+
+.hover\:text-accent:hover {
+  color: var(--accent);
+}
+
+.hover\:bg-secondary:hover {
+  background-color: var(--secondary);
+}
+
+.bg-secondary {
+  background-color: var(--secondary);
+}
+
+.bg-accent {
+  background-color: var(--accent);
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #e4e4e4;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #666666;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #434343;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #dcd4c7; /* Beige */
+  border-radius: 8px;
+  outline: none;
+  transition: border 0.3s;
+}
+.input-field:focus {
+  border-color: #7a1315; /* Maroon */
+}
+
+
