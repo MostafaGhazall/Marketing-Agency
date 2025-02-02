@@ -16,6 +16,11 @@ const Home: React.FC = () => {
     hidden: (i: number) => ({
       y: "100%",
       opacity: 1,
+      transition: {
+        delay: i * 0.1,
+        duration: 0.2,
+        ease: "easeOut",
+      },
     }),
     visible: (i: number) => ({
       y: "-3%",
