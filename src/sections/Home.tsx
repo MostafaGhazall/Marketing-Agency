@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const Home: React.FC = () => {
   const words = ["Strategic", "Impactful", "Reliable", "Dynamic"];
   const [currentWord, setCurrentWord] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -95,14 +97,12 @@ const Home: React.FC = () => {
         </p>
 
         {/* Call-to-Action Button */}
-        <a
-          href="https://docs.google.com/forms/d/e/1FAIpQLSeS3v9kfWhn_yZnsOf17oZjCtn168kh1WuoaxMvOnfy09ZCOQ/viewform?usp=header"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={() => navigate("/booking")}
           className="mt-6 inline-flex items-center gap-2 text-sm sm:text-lg md:text-xl font-medium text-white group hover:text-[#1e1f21] transition"
         >
           Book a Call →
-        </a>
+        </button>
       </div>
     </section>
   );
