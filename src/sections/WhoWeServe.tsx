@@ -79,7 +79,7 @@ const WhoWeServe: React.FC = () => {
       </motion.div>
 
       {/* Content Below */}
-      <div className="relative z-10 text-center max-w-3xl mt-[23vh] md:mt-[41vh]">
+      <div className="relative z-10 text-center max-w-3xl mt-[23vh] md:mt-[41vh] lg:mt-[45vh]">
         <p className="text-base sm:text-lg md:text-base text-accent leading-relaxed">
           FLAIR's comprehensive services are designed to provide support to
           companies seeking expertise in digital marketing and public relations.

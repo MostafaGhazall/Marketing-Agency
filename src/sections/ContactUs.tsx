@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 
 const ContactUs: React.FC = () => {
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const response = await fetch("https://formspree.io/f/xdkazyyk", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    if (response.ok) {
+      setSubmitted(true);
+      setTimeout(() => setSubmitted(false), 3000);
+    }
+  };
+
   return (
     <section id="contact-us" className="bg-primary py-16 px-6 md:px-20">
       {/* Hero Section */}
@@ -24,7 +44,9 @@ const ContactUs: React.FC = () => {
           <img src="/logo22.png" alt="FLAIR Logo" className="h-24 mb-6" />
 
           {/* Contact Info */}
-          <h3 className="text-2xl font-semibold text-accent mb-4">Contact Us</h3>
+          <h3 className="text-2xl font-semibold text-accent mb-4">
+            Contact Us
+          </h3>
           <p className="text-lg text-accent/80">
             <strong>Address:</strong> Bld. 21, St.14, Maadi, Cairo, Egypt
           </p>
@@ -43,16 +65,28 @@ const ContactUs: React.FC = () => {
 
           {/* Social Media Icons */}
           <div className="mt-6 flex gap-4">
-            <a href="#" className="p-2 bg-secondary text-white rounded-full hover:bg-accent transition">
+            <a
+              href="#"
+              className="p-2 bg-secondary text-white rounded-full hover:bg-accent transition"
+            >
               <Facebook size={24} />
             </a>
-            <a href="#" className="p-2 bg-secondary text-white rounded-full hover:bg-accent transition">
+            <a
+              href="#"
+              className="p-2 bg-secondary text-white rounded-full hover:bg-accent transition"
+            >
               <Linkedin size={24} />
             </a>
-            <a href="#" className="p-2 bg-secondary text-white rounded-full hover:bg-accent transition">
+            <a
+              href="#"
+              className="p-2 bg-secondary text-white rounded-full hover:bg-accent transition"
+            >
               <Instagram size={24} />
             </a>
-            <a href="#" className="p-2 bg-secondary text-white rounded-full hover:bg-accent transition">
+            <a
+              href="#"
+              className="p-2 bg-secondary text-white rounded-full hover:bg-accent transition"
+            >
               <Youtube size={24} />
             </a>
           </div>
@@ -61,35 +95,76 @@ const ContactUs: React.FC = () => {
         {/* Contact Form (Right Side) */}
         <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-2xl">
           <h3 className="text-2xl font-semibold text-accent">Send a Message</h3>
-          <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" className="mt-6 space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-accent font-semibold mb-1">Name</label>
-                <input type="text" name="name" className="input-field" required />
+          {!submitted ? (
+            <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+              {/* Honeypot Field (Invisible to Users, Catches Bots) */}
+              <input type="text" name="_gotcha" style={{ display: "none" }} />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-accent font-semibold mb-1">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    className="input-field"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-accent font-semibold mb-1">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    className="input-field"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-accent font-semibold mb-1">
+                    Phone
+                  </label>
+                  <input
+                    type="text"
+                    name="phone"
+                    className="input-field"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-accent font-semibold mb-1">
+                    Subject
+                  </label>
+                  <input type="text" name="subject" className="input-field" />
+                </div>
               </div>
               <div>
-                <label className="block text-accent font-semibold mb-1">Email</label>
-                <input type="email" name="email" className="input-field" required />
+                <label className="block text-accent font-semibold mb-1">
+                  Message
+                </label>
+                <textarea
+                  name="message"
+                  className="input-field resize-none"
+                  rows={4}
+                  required
+                ></textarea>
               </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-accent font-semibold mb-1">Phone</label>
-                <input type="text" name="phone" className="input-field" required />
-              </div>
-              <div>
-                <label className="block text-accent font-semibold mb-1">Subject</label>
-                <input type="text" name="subject" className="input-field" />
-              </div>
-            </div>
-            <div>
-              <label className="block text-accent font-semibold mb-1">Message</label>
-              <textarea name="message" className="input-field resize-none" rows={4} required></textarea>
-            </div>
-            <button type="submit" className="w-full bg-secondary text-white py-3 rounded-lg font-semibold transition duration-300 hover:text-accent">
-              Let's Talk
-            </button>
-          </form>
+              <button
+                type="submit"
+                className="w-full bg-secondary text-white py-3 rounded-lg font-semibold transition duration-300 hover:text-accent"
+              >
+                Let's Talk
+              </button>
+            </form>
+          ) : (
+            <p className="text-secondary text-lg font-semibold text-center py-5">
+              Thank you! We'll get in touch soon.
+            </p>
+          )}
         </div>
       </div>
     </section>
